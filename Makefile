@@ -1,12 +1,12 @@
-.PHONY : info deploy run_playbook get_kube_config test
+.PHONY : info deploy run_playbook get_kube_config test all
+
+all: info
 
 info: 
 	@echo "\nRun 'make deploy' in order to run the cluster configuration playbook."
 	@echo "\nEnsure that the 'inventory' file corresponds to your infrastructure and"
 	@echo "that your ssh public key has been deployed on the target servers before"
 	@echo "running anything!\n"
-
-all: info
 
 deploy: run_playbook get_kube_config test
 
