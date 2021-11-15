@@ -8,7 +8,7 @@ info:
 	@echo "that your ssh public key has been deployed on the target servers before"
 	@echo "running anything!\n"
 
-deploy: run_playbook get_kube_config test
+deploy: | run_playbook get_kube_config test
 
 run_playbook:
 	ansible-playbook cluster.yml
