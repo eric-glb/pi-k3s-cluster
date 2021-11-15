@@ -25,15 +25,9 @@
           # As we plan to use a shared FS for volumes
           - nfs-common
 
-    - name: Cluster shared NFS file system on Gandalf
-      mount:
-        src: gandalf:/scratch/cluster
-        path: /mnt/shared
-        opts: rw
-        state: mounted
-        fstype: nfs
-
   roles:
+    # apt-get update && apt-get upgrade
+    - role: apt-update
     # Ensure hostnames are correctly set
     - role: ansible-role-hostname
     # zram-config to use compressed memory swap + compressed memory logs
@@ -43,8 +37,17 @@
     - role: download
     - role: raspberrypi
 
+  post_tasks:
+    - name: Cluster shared NFS file system on Gandalf
+      mount:
+        src: gandalf:/scratch/cluster
+        path: /mnt/shared
+        opts: rw
+        state: mounted
+        fstype: nfs
+
+
   # Uncomment in case of issue; should already have been done in raspberrypi role
-  # post_tasks:
   #   - name: reboot cluster
   #     reboot:
 

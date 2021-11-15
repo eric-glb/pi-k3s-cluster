@@ -1,0 +1,19 @@
+---
+- name: Update all packages to their latest version
+  apt: 
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Check if a reboot is needed
+  stat: path=/var/run/reboot-required get_md5=no
+  register: reboot_required_file
+
+- name: Reboot if needed
+  reboot:
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: reboot_required_file.stat.exists
