@@ -1,0 +1,17 @@
+---
+
+master:
+  hosts:
+    pinode0:
+
+node:
+  hosts:
+    pinode1:
+    pinode2:
+    pinode3:
+    pinode4:
+
+cluster:
+  children:
+    master:
+    node:

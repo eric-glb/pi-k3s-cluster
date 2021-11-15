@@ -1,0 +1,70 @@
+---
+# Based on:
+#   - https://github.com/k3s-io/k3s-ansible (k3s installation)
+#   - https://github.com/ecdye/zram-config  (limit SD-card wear out)
+
+
+
+# Needed (in my case): python 2 instead of Python 3 -> bootstrap
+# Set in group_vars/all.yml
+
+- import_playbook: roles/bootstrap.yml
+
+
+# For every element of the cluster
+ 
+- hosts: cluster
+  gather_facts: yes
+
+  pre_tasks:
+    - name: Prerequisite packages (iptables, nfs-common)
+      apt:
+        pkg:
+          # Missing from k3s-io/k3s-ansible 
+          - iptables 
+          # As we plan to use a shared FS for volumes
+          - nfs-common
+
+    - name: Cluster shared NFS file system on Gandalf
+      mount:
+        src: gandalf:/scratch/cluster
+        path: /mnt/shared
+        opts: rw
+        state: mounted
+        fstype: nfs
+
+  roles:
+    # Ensure hostnames are correctly set
+    - role: ansible-role-hostname
+    # zram-config to use compressed memory swap + compressed memory logs
+    - role: zram-config
+    # From k3s-io/k3s-ansible
+    - role: prereq
+    - role: download
+    - role: raspberrypi
+
+  # Uncomment in case of issue; should already have been done in raspberrypi role
+  # post_tasks:
+  #   - name: reboot cluster
+  #     reboot:
+
+
+# Cluster master node specifics
+
+- hosts: master
+
+  roles:
+    - role: k3s/master
+
+
+# Cluster nodes specifics
+
+- hosts: node
+
+  roles:
+    - role: k3s/node
+
+
+# Get .kube/config file
+# scp pinode0:~/.kube/config ~/.kube/config
+

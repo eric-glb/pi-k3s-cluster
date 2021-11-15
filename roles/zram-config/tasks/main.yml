@@ -1,0 +1,28 @@
+---
+
+- name: Install git
+  apt: 
+    name: git
+    state: present
+
+- name: Check if zram-config has already been installed
+  stat: 
+    path: /usr/local/bin/zram-config
+  register: zram_config
+
+- name: Clone git repo https://github.com/ecdye/zram-config
+  git: 
+    repo: 'https://github.com/ecdye/zram-config.git'
+    dest: /srv/zram-config
+    clone: yes
+    update: no
+  when: zram_config.stat.exists == False
+
+- name: Install zram-config
+  shell: cd /srv/zram-config && bash ./install.bash 
+  args:
+    executable: /bin/bash
+  failed_when: false
+  changed_when: false
+  when: zram_config.stat.exists == False
+

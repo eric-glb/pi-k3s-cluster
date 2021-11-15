@@ -1,0 +1,18 @@
+---
+
+- hosts: all
+  become: true
+  user: pi
+  gather_facts: false
+
+  tasks:
+    - name: Check for Python
+      raw: test -e /usr/bin/python2
+      changed_when: false
+      failed_when: false
+      register: check_python
+      check_mode: no
+
+    - name: Install Python
+      raw: apt -y update && apt install -y python2-minimal
+      when: check_python.rc != 0
