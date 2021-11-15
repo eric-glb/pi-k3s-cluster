@@ -1,19 +1,26 @@
+.PHONY : info deploy run_playbook get_kube_config test
+
 info: 
 	@echo "\nRun 'make deploy' in order to run the cluster configuration playbook."
 	@echo "\nEnsure that the 'inventory' file corresponds to your infrastructure and"
 	@echo "that your ssh public key has been deployed on the target servers before"
 	@echo "running anything!\n"
 
+all: info
 
+deploy: run_playbook get_kube_config test
 
-
-deploy:
+run_playbook:
 	ansible-playbook cluster.yml
+
+get_kube_config:
 	scp -q pinode0:~/.kube/config ~/.kube/config 
 	@sleep 3
-	@echo "\nkubectl get nodes -A"
-	@echo "--------------------"
-	@kubectl get nodes -A
+
+test:
+	@echo "\nkubectl get nodes"
+	@echo "-----------------"
+	@kubectl get nodes
 	@echo "\nkubectl get pods -A"
 	@echo "-------------------"
 	@kubectl get pods -A
@@ -24,3 +31,4 @@ deploy:
 	@echo "------------------"
 	@kubectl top pod -A
 	@echo ""
+
