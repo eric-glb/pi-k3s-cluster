@@ -2,9 +2,9 @@
 
 ## Objectives
 
-- rename fresh installed Pi nodes (relying on [insspb/ansible-role-hostname](https://github.com/insspb/ansible-role-hostname))
-- reduce SD card wear out on the Pi nodes (relying on [ecdye/zram-config](https://github.com/ecdye/zram-config)) 
-- deploy a simple k3s cluster on five Raspberry Pi nodes (relying on [k3s-io/k3s-ansible](https://github.com/k3s-io/k3s-ansible))
+- rename fresh installed Pi nodes (based on [insspb/ansible-role-hostname](https://github.com/insspb/ansible-role-hostname))
+- reduce SD card wear out on the Pi nodes (based on [ecdye/zram-config](https://github.com/ecdye/zram-config)) 
+- deploy a simple k3s cluster on five Raspberry Pi nodes (based on [k3s-io/k3s-ansible](https://github.com/k3s-io/k3s-ansible))
 - mount a shared NFS folder on every node
 - using a simple playbook
 
