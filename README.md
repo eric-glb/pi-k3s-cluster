@@ -1,6 +1,6 @@
 # pi-k3s-cluster
 
-[picluster](./assets/cluster.jpg)
+![picluster](./assets/cluster.jpg)
 
 
 ## Objectives
