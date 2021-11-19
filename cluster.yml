@@ -2,7 +2,7 @@
 # Based on:
 #   - https://github.com/k3s-io/k3s-ansible (k3s installation)
 #   - https://github.com/ecdye/zram-config  (limit SD-card wear out)
-
+#   - https://github.com/insspb/ansible-role-hostname (rename nodes)
 
 
 # Needed (in my case): python 2 instead of Python 3 -> bootstrap
