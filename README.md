@@ -1,5 +1,8 @@
 # pi-k3s-cluster
 
+[picluster](./assets/cluster.jpg)
+
+
 ## Objectives
 
 - rename fresh installed Pi nodes (relying on [insspb/ansible-role-hostname](https://github.com/insspb/ansible-role-hostname))
