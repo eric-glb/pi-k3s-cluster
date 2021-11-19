@@ -35,7 +35,7 @@ make deploy
 
 Basic test, once cluster installed:
 
-```bash
+```
 make test
 ```
 
